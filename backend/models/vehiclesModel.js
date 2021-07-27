@@ -1,7 +1,13 @@
 const connection = require('../knex/knex')
 
 function Vehicles() {
-    const showAll = async () => {
+    this.plate = ''
+    this.brand = ''
+    this.model = ''
+    this.version = ''
+    this.year = 0
+
+    this.showAll = async () => {
         try {
             const vehicles = await connection('vehicles')
             .select([
@@ -21,7 +27,7 @@ function Vehicles() {
         }
     }
 
-    const show = async (id) => {
+    this.show = async (id) => {
         try {
             const vehicles = await connection('vehicles')
             .select([
@@ -42,9 +48,23 @@ function Vehicles() {
         }
     }
 
-    return {
-        showAll,
-        show
+    this.append = async () => {
+        try {
+            await connection('vehicles')
+            .insert({
+                plate: this.plate,
+                brand: this.brand,
+                model: this.model,
+                version: this.version,
+                year: this.year,
+            })
+
+            return Promise.resolve()
+            
+        } catch (e) {
+            console.log()
+            return Promise.reject({message: e.message});            
+        }
     }
 }
 

@@ -24,5 +24,24 @@ module.exports = {
         } catch (e) {
             res.status(500).send("Error " + e.message)
         }
+    },
+
+    async append(req, res) {
+        try {
+            const { plate, brand, model, version, year } = req.body
+
+            const vehicles = new Vehicles()
+            vehicles.plate = plate
+            vehicles.brand = brand
+            vehicles.model = model
+            vehicles.version = version
+            vehicles.year = year
+            await vehicles.append()
+
+            res.status(200).send({status: true, message: "new vehicle added!"})
+
+        } catch (e) {
+            res.status(500).send("Error " + e.message)
+        }
     }
 }
