@@ -62,7 +62,41 @@ function Vehicles() {
             return Promise.resolve()
             
         } catch (e) {
-            console.log()
+            // reg error in log e.message
+            return Promise.reject({message: e.message});            
+        }
+    }
+
+    this.update = async () => {
+        try {
+            await connection('vehicles')
+            .update({
+                plate: this.plate,
+                brand: this.brand,
+                model: this.model,
+                version: this.version,
+                year: this.year,
+            })
+            .where({ id: this.id })
+
+            return Promise.resolve()
+            
+        } catch (e) {
+            // reg error in log e.message
+            return Promise.reject({message: e.message});            
+        }
+    }
+
+    this.delete = async (id) => {
+        try {
+            await connection('vehicles')
+            .delete()
+            .where({ id })
+
+            return Promise.resolve()
+            
+        } catch (e) {
+            // reg error in log e.message
             return Promise.reject({message: e.message});            
         }
     }
